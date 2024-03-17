@@ -8,7 +8,6 @@ namespace DallaiStudios.Plugins.HttpRequester
     /// Enum that defines all the possible Http Status Codes.
     /// </summary>
     /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-    /// <version>1.0.0</version>
     public enum HttpStatusCode
     {
         CONTINUE = 100,
@@ -78,14 +77,12 @@ namespace DallaiStudios.Plugins.HttpRequester
     /// Extension methods to the StatusCodes enum.
     /// </summary>
     /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-    /// <version>1.0.0</version>
     public static class StatusCodesExtensions
     {
         /// <summary>
         /// Extension method to get the integer value of the status code.
         /// </summary>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        /// <version>1.0.0</version>
         public static int Value(this HttpStatusCode code)
         {
             return (int)code;
