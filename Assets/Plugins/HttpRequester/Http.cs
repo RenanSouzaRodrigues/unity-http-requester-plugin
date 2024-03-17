@@ -12,7 +12,6 @@ namespace DallaiStudios.Plugins.HttpRequester
     /// the HTTP request.
     /// </summary>
     /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-    /// <version>1.0.0</version>
     public class Http 
     {
         private HttpClient client;
@@ -54,7 +53,6 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// </remarks>
         /// <param name="BaseURL">Define the base URL to be used.</param>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        /// <version>1.0.0</version>
         public void SetBaseURL(string BaseURL) 
         {
             this.baseURL = BaseURL;
@@ -67,7 +65,6 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// <param name="request">The request object</param>
         /// <returns>Returns a new Response instance</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        /// <version>1.0.0</version>
         public async Task<Response> GetAsync(string URL, Request request)
         {
             this.SetDefaultHeaders(request.Headers);
@@ -84,7 +81,6 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// <param name="Request">The request to send</param>
         /// <returns>Returns a new Response instance</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        /// <version>1.0.0</version>
         public async Task<Response> PostAsync(string URL, Request Request) 
         {
             this.SetDefaultHeaders(Request.Headers);
@@ -101,7 +97,6 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// <param name="Request">The request instance to send</param>
         /// <returns>Returns a new Response instance</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        /// <version>1.0.0</version>
         public async Task<Response> PutAsync(string URL, Request Request)
         {
             this.SetDefaultHeaders(Request.Headers);
@@ -118,7 +113,6 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// <param name="Request">The request instance to send</param>
         /// <returns>Returns a new Response instance</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        /// <version>1.0.0</version>
         public async Task<Response> PatchAsync(string URL, Request Request)
         {
             this.SetDefaultHeaders(Request.Headers);
@@ -135,7 +129,6 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// <param name="request">The request instance to send</param>
         /// <returns>Returns a new Response instance</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        /// <version>1.0.0</version>
         public async Task<Response> DeleteAsync(string URL, Request request = null)
         {
             if (request is not null) request = new Request();

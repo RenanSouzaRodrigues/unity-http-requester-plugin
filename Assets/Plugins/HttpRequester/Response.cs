@@ -8,7 +8,6 @@ namespace DallaiStudios.Plugins.HttpRequester
     /// Class that represents the HTTP result response
     /// </summary>
     /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-    /// <version>1.2.0</version>
     public class Response
     {
         public HttpStatusCode HttpStatusCode;
@@ -23,7 +22,6 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// This method will abstract the response and build it. This process runs automatically
         /// </summary>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        /// <version>1.0.0</version>
         public async Task BuildResponseContent()
         {
             this.body = await this.responseMessage.Content.ReadAsStringAsync();
@@ -37,7 +35,6 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// <typeparam name="T">The class type to map the response body to.</typeparam>
         /// <returns>An instance of the provided class.</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        /// <version>1.2.0</version>
         public T ParseBody<T>()
         {
             return JsonUtility.FromJson<T>(this.body);
