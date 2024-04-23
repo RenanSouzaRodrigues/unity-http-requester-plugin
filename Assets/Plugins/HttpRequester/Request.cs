@@ -12,6 +12,7 @@ namespace DallaiStudios.Plugins.HttpRequester
     public class Request
     {
         public Dictionary<string, string> Headers { get; private set; }
+        public Dictionary<string, string> QueryParameters { get; private set; }
         public StringContent Body { get; private set; }
         
         public Request() => this.Headers = new Dictionary<string, string>();
@@ -24,13 +25,29 @@ namespace DallaiStudios.Plugins.HttpRequester
         public void SetRequestHeaders(Dictionary<string, string> RequestHeaders) => this.Headers = RequestHeaders;
 
         /// <summary>
-        /// Set a new request header.
+        /// Adds a new request header.
         /// </summary>
         /// <param name="key">The header Key.</param>
         /// <param name="value">The header value for the provided key.</param>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
         public void AddHeader(string key, string value) => this.Headers.Add(key, value);
 
+        /// <summary>
+        /// Set a new request query parameters.
+        /// </summary>
+        /// <param name="key">The header Key.</param>
+        /// <param name="value">The header value for the provided key.</param>
+        /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
+        public void SetQueryParameters(Dictionary<string, string> QueryParameters) => this.QueryParameters = QueryParameters;
+        
+        /// <summary>
+        /// Adds a new query parameter to the request.
+        /// </summary>
+        /// <param name="key">The header Key.</param>
+        /// <param name="value">The header value for the provided key.</param>
+        /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
+        public void AddQueryParameter(string key, string value) => this.QueryParameters.Add(key, value);
+        
         /// <summary>
         /// Define the request body payload
         /// </summary>

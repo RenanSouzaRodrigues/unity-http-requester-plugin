@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace DallaiStudios.Plugins.HttpRequester
 {
@@ -44,6 +45,16 @@ namespace DallaiStudios.Plugins.HttpRequester
             return new Uri(string.IsNullOrEmpty(this.baseURL) ? URL : this.baseURL + URL);
         }
         
+        private string SetQueryParameters(string URL, Dictionary<string, string> QueryParameters)
+        {
+            string query = "?";
+            foreach (KeyValuePair<string, string> entry in QueryParameters)
+            {
+                query += entry.Key + "=" + entry.Value + "&";
+            }
+            return URL + query.TrimEnd('&');
+        }
+        
         /// <summary>
         /// This method can be used to provide for the Http class a default base URL for every request.
         /// </summary>  
@@ -65,9 +76,11 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// <param name="request">The request object</param>
         /// <returns>Returns a new Response instance</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        public async Task<Response> GetAsync(string URL, Request request)
+        public async Task<Response> GetAsync(string URL, Request request = null)
         {
+            if (request is null) request = new Request();
             this.SetDefaultHeaders(request.Headers);
+            if (request.QueryParameters.Count > 0) URL = this.SetQueryParameters(URL, request.QueryParameters);
             HttpResponseMessage httpResponse = await this.client.GetAsync(this.PrepareURL(URL));
             Response response = new Response(httpResponse);
             await response.BuildResponseContent();
@@ -81,10 +94,16 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// <param name="Request">The request to send</param>
         /// <returns>Returns a new Response instance</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        public async Task<Response> PostAsync(string URL, Request Request) 
+        public async Task<Response> PostAsync(string URL, Request request) 
         {
-            this.SetDefaultHeaders(Request.Headers);
-            HttpResponseMessage httpResponse = await this.client.PostAsync(this.PrepareURL(URL), Request.Body);
+            if (request is null)
+            {
+                Debug.LogError("POST requests must have a Request Object. Make sure you are sending a Request Object.");
+                return null;
+            }
+            this.SetDefaultHeaders(request.Headers);
+            if (request.QueryParameters.Count > 0) URL = this.SetQueryParameters(URL, request.QueryParameters);
+            HttpResponseMessage httpResponse = await this.client.PostAsync(this.PrepareURL(URL), request.Body);
             Response response = new Response(httpResponse);
             await response.BuildResponseContent();
             return response;
@@ -97,10 +116,16 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// <param name="Request">The request instance to send</param>
         /// <returns>Returns a new Response instance</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        public async Task<Response> PutAsync(string URL, Request Request)
+        public async Task<Response> PutAsync(string URL, Request request)
         {
-            this.SetDefaultHeaders(Request.Headers);
-            HttpResponseMessage httpResponse = await this.client.PutAsync(this.PrepareURL(URL), Request.Body);
+            if (request is null)
+            {
+                Debug.LogError("PUT requests must have a request object. Make sure you are sending a request object.");
+                return null;
+            }
+            this.SetDefaultHeaders(request.Headers);
+            if (request.QueryParameters.Count > 0) URL = this.SetQueryParameters(URL, request.QueryParameters);
+            HttpResponseMessage httpResponse = await this.client.PutAsync(this.PrepareURL(URL), request.Body);
             Response response = new Response(httpResponse);
             await response.BuildResponseContent();
             return response;
@@ -110,13 +135,19 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// Performs a PATCH request method
         /// </summary>
         /// <param name="URL">The URL to make the request</param>
-        /// <param name="Request">The request instance to send</param>
+        /// <param name="request">The request instance to send</param>
         /// <returns>Returns a new Response instance</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        public async Task<Response> PatchAsync(string URL, Request Request)
+        public async Task<Response> PatchAsync(string URL, Request request)
         {
-            this.SetDefaultHeaders(Request.Headers);
-            HttpResponseMessage httpResponse = await this.client.PatchAsync(this.PrepareURL(URL), Request.Body);
+            if (request is null)
+            {
+                Debug.LogError("PATCH requests must have a request object. Make sure you are sending a request object.");
+                return null;
+            }
+            this.SetDefaultHeaders(request.Headers);
+            if (request.QueryParameters.Count > 0) URL = this.SetQueryParameters(URL, request.QueryParameters);
+            HttpResponseMessage httpResponse = await this.client.PatchAsync(this.PrepareURL(URL), request.Body);
             Response response = new Response(httpResponse);
             await response.BuildResponseContent();
             return response;
@@ -129,10 +160,11 @@ namespace DallaiStudios.Plugins.HttpRequester
         /// <param name="request">The request instance to send</param>
         /// <returns>Returns a new Response instance</returns>
         /// <author><a href="https://github.com/RenanSouzaRodrigues">Renan Souza (Dallai)</a></author>
-        public async Task<Response> DeleteAsync(string URL, Request request = null)
+        public async Task<Response> DeleteAsync(string URL, Request Request = null)
         {
-            if (request is not null) request = new Request();
-            this.SetDefaultHeaders(request.Headers);
+            if (Request is null) Request = new Request();
+            this.SetDefaultHeaders(Request.Headers);
+            if (Request.QueryParameters.Count > 0) URL = this.SetQueryParameters(URL, Request.QueryParameters);
             HttpResponseMessage httpResponse = await this.client.DeleteAsync(this.PrepareURL(URL));
             Response response = new Response(httpResponse);
             await response.BuildResponseContent();
